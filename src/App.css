@@ -1,0 +1,127 @@
+body {
+  overflow-x: hidden;
+}
+.css-14x1f45 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: #fff; /* Change this to your desired text color */
+  padding: 10px; /* Adjust the padding as needed */
+  justify-content: center !important;
+}
+@media (min-width: 1199.98px) {
+  .css-es5cmx {
+    place-content: center !important;
+  }
+}
+@media (max-width: 1199.98px) {
+  .css-14byaag {
+    padding-left: 0px !important;
+  }
+}
+.css-1yxrs4o-MuiTypography-root {
+  font-weight: bold !important;
+}
+
+.css-1ezb8eo-MuiButtonBase-root-MuiIconButton-root .material-icons,
+.css-1ezb8eo-MuiButtonBase-root-MuiIconButton-root .material-icons-round {
+  font-size: 2.25rem !important;
+}
+
+/* app.css */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 100%; /* Max width is set to 300px */
+  width: 100%; /* Added to make the form 100% width */
+  margin: 0 auto;
+}
+
+/* Add margin and padding to text fields */
+.form-container .MuiTextField-root {
+  padding: 5px;
+}
+
+/* Center the button */
+.form-container .MuiButton-root {
+  align-self: center;
+}
+.css-1jpt7oq-MuiButtonBase-root-MuiButton-root:hover {
+  color: white;
+}
+.css-1jpt7oq-MuiButtonBase-root-MuiButton-root {
+  color: white !important;
+}
+.profile_list {
+  font-size: 2.25rem !important;
+}
+.css-145swng-MuiTypography-root {
+  font-weight: bold !important;
+}
+.css-ks1z1y-MuiButtonBase-root-MuiIconButton-root .material-icons,
+.css-ks1z1y-MuiButtonBase-root-MuiIconButton-root .material-icons-round {
+  font-size: 2.25rem !important;
+}
+.css-lcxzmd-MuiPaper-root-MuiCard-root {
+  width: 100% !important;
+}
+.css-d5t4w3 {
+  font-weight: bold;
+}
+.profile {
+  position: fixed;
+  bottom: 13px;
+  width: 100%;
+}
+.form-container .MuiTextField-root {
+  padding: 0px !important;
+}
+
+li::marker {
+  content: ""; /* You can change this content to any character or style you want */
+}
+.page_number {
+  padding: 16px;
+}
+
+.css-1wuttcd {
+  justify-content: left !important;
+}
+.video_table_admin {
+  height: 70vh !important;
+  overflow: scroll !important;
+}
+
+.video_table_admin .pagination {
+  display: none;
+}
+.scroll-dialog-title-admin {
+  min-width: 500px !important;
+}
+.admin_bank_details {
+  color: black !important;
+}
+.unpaid_admin {
+  font-size: 13px !important;
+}
+
+.admin_user_list_name {
+  text-decoration: underline !important;
+}
+
+.video-player {
+  /* Ensure controls are always hidden */
+  &::-webkit-media-controls {
+    display: none !important;
+  }
+
+  /* Show controls only when video is hovered or being played */
+  &:hover::-webkit-media-controls,
+  &.playing::-webkit-media-controls {
+    display: block !important;
+  }
+}

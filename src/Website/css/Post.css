@@ -1,0 +1,444 @@
+.video-container {
+  height: 85vh !important;
+  border-radius: 20px !important;
+  margin-top: 10px !important;
+}
+.video-container_mobile {
+  height: 100vh !important;
+  border-radius: 0px !important;
+}
+.main_continer_home {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.video-container::-webkit-scrollbar {
+  display: none !important;
+}
+.Reels_Slider {
+  position: relative !important;
+  border-radius: 20px !important;
+}
+.Reels_Slider .fa {
+  left: 1.3rem !important;
+  align-items: center !important;
+}
+.Reels_Slider .backbutton_reels {
+  position: absolute !important;
+  top: 0rem !important;
+  left: 0.1rem !important;
+}
+
+.descpstion_reels {
+  color: var(--LINKEDIN-BLACK, #ffffff) !important;
+  font-family: "Abhaya Libre", sans-serif !important;
+  font-size: 18px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.35px !important;
+  cursor: pointer !important;
+  height: 60px;
+  overflow: auto !important;
+}
+.Reels_Slider .descpstion {
+  position: absolute !important;
+  bottom: 2rem !important;
+  left: 1.3rem !important;
+  text-align: left !important;
+}
+.descpstion h4 {
+  color: rgb(242, 245, 245) !important;
+  margin-top: 4.2% !important;
+  margin-left: 0.5rem !important;
+}
+.subcribe_button_reel {
+  background: #578a48 !important;
+  color: #fff !important;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 12px !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  line-height: 12px !important;
+  letter-spacing: 0.9px !important;
+  padding: 17px !important;
+  height: 10px !important;
+  margin-top: 8px !important;
+  margin-left: 13px !important;
+}
+
+.icon-styling_fillter {
+  right: -0.7rem !important;
+  font-size: 1.8rem !important;
+}
+.backbutton_reels {
+  position: fixed !important;
+  z-index: 999 !important;
+  display: flex !important;
+}
+.icon-styling_fillter_box {
+  top: 2.5rem !important;
+  right: 2.3rem !important;
+  font-size: 1.8rem !important;
+}
+.icon-styling_view {
+  position: absolute !important;
+  top: 14rem !important;
+  right: 1.3rem !important;
+  font-size: 1.8rem !important;
+}
+.icon-styling_view_count {
+  position: absolute !important;
+  top: 16rem !important;
+  right: 2.2rem !important;
+  font-size: 1rem !important;
+}
+
+.icon-styling {
+  position: absolute !important;
+  top: 18rem !important;
+  right: 1.3rem !important;
+  font-size: 1.8rem !important;
+}
+.icon-styling_like_count {
+  position: absolute !important;
+  top: 20rem !important;
+  right: 2.5rem !important;
+  font-size: 1rem !important;
+}
+.icon-styling_commant {
+  position: absolute !important;
+  top: 23rem !important;
+  right: 1.3rem !important;
+  font-size: 1.8rem !important;
+}
+.icon-styling_commant_count {
+  position: absolute !important;
+  top: 25rem !important;
+  right: 2.1rem !important;
+  font-size: 1rem !important;
+}
+
+.icon-styling_share {
+  position: absolute !important;
+  top: 27rem !important;
+  right: 1.3rem !important;
+  font-size: 1.8rem !important;
+}
+.icon-styling_report {
+  position: absolute !important;
+  top: 30rem !important;
+  right: 1.3rem !important;
+  font-size: 1.8rem !important;
+}
+.like {
+  cursor: pointer !important;
+  color: white !important;
+}
+.unlike {
+  cursor: pointer !important;
+  color: white !important;
+}
+.icon-styling:hover {
+  transform: scale(1.3) !important;
+}
+.icon-styling_fillter:hover {
+}
+.icon-styling_commant:hover {
+  transform: scale(1.3) !important;
+}
+.icon-styling_share:hover {
+  transform: scale(1.3) !important;
+}
+.icon-styling_report:hover {
+  transform: scale(1.3) !important;
+}
+
+.volume {
+  position: absolute !important;
+  top: 19rem !important;
+  right: 1.3rem !important;
+}
+.modal-container {
+  display: flex !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden;
+}
+.comment-container {
+  width: 100%;
+  height: 85vh !important;
+}
+.video-box {
+  height: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+.video-box video {
+  height: 89vh !important;
+}
+.card1 {
+}
+.comment_box_reels {
+  padding: 16px !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  margin-top: 20px !important;
+}
+.comment_box_reels_mobile {
+  padding: 16px !important;
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
+  margin-top: 0px !important;
+}
+
+.unlike {
+  color: #dfe4ea !important;
+  cursor: pointer !important;
+}
+.fa .fa_text {
+  font-size: 16px !important;
+  color: azure !important;
+  margin-top: 3.8% !important;
+  margin-left: 0.5rem !important;
+  font-family: Abhaya Libre, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 500 !important;
+  line-height: normal !important;
+}
+@media (max-width: 400px) {
+  .card1 {
+    height: 71vh !important;
+  }
+  .card2 {
+    width: 100% !important;
+  }
+  .video-container_mobile {
+    height: 100vh !important;
+  }
+  .video-styling_mobile {
+    height: 100vh !important;
+  }
+  .Reels_Slider .fa {
+    left: 1.3rem !important;
+    align-items: center !important;
+  }
+  .fa .fa_text {
+    font-size: 15px !important;
+    color: azure !important;
+    margin-top: 6.2% !important;
+    margin-left: 0.5rem !important;
+    font-family: Abhaya Libre, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+  }
+  .subcribe_button_reel {
+    background: #578a48 !important;
+    color: #fff !important;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+    font-family: "Poppins", sans-serif !important;
+    font-size: 9px !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    line-height: 12px !important;
+    letter-spacing: 0.9px !important;
+    padding: 17px !important;
+    margin-top: 10px !important;
+    margin-left: 13px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    min-height: 26px !important;
+  }
+  .Reels_Slider .descpstion {
+    position: absolute !important;
+    bottom: 4rem !important;
+    left: 1.3rem !important;
+    text-align: left !important;
+  }
+  .descpstion_reels {
+    color: var(--LINKEDIN-BLACK, #ffffff) !important;
+    font-family: "Abhaya Libre", sans-serif !important;
+    font-size: 14px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.35px !important;
+    cursor: pointer !important;
+    height: 107px;
+    overflow: auto !important;
+    line-height: 1.3 !important;
+  }
+  .icon-styling {
+    position: absolute !important;
+    top: 17rem !important;
+    right: 1.3rem !important;
+    font-size: 1.3rem !important;
+  }
+  .icon-styling_like_count {
+    position: absolute !important;
+    top: 19rem !important;
+    right: 2.3rem !important;
+    font-size: 0.8rem !important;
+  }
+  .icon-styling_commant {
+    position: absolute !important;
+    top: 21rem !important;
+    right: 1.3rem !important;
+    font-size: 1.3rem !important;
+  }
+  .icon-styling_commant_count {
+    position: absolute !important;
+    top: 23rem !important;
+    right: 2.1rem !important;
+    font-size: 0.8rem !important;
+  }
+  .icon-styling_share {
+    position: absolute !important;
+    top: 25rem !important;
+    right: 1.3rem !important;
+    font-size: 1.3rem !important;
+  }
+  .icon-styling_report {
+    position: absolute !important;
+    top: 28rem !important;
+    right: 1.3rem !important;
+    font-size: 1.3rem !important;
+  }
+}
+@media only screen and (max-width: 401px) and (min-width: 500px) {
+  .card1 {
+    height: 71vh !important;
+  }
+  .card2 {
+    width: 100% !important;
+  }
+}
+@media only screen and (max-width: 767px) and (min-width: 501px) {
+  .modal-container {
+    height: 100% !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+  .Reels_Slider .fa {
+    left: 2rem !important;
+    align-items: center !important;
+  }
+  .Reels_Slider .descpstion {
+    position: absolute !important;
+    bottom: 4rem !important;
+    left: 2rem !important;
+    text-align: left !important;
+  }
+
+  .video-box {
+    visibility: collapse !important;
+  }
+  .video-box video {
+    height: 100vh !important;
+  }
+
+  .icon-styling {
+    position: absolute !important;
+    top: 18rem !important;
+    right: 1.5rem !important;
+  }
+  .icon-styling_like_count {
+    position: absolute !important;
+    top: 20rem !important;
+    right: 2.6rem !important;
+  }
+  .icon-styling_commant {
+    position: absolute !important;
+    top: 22rem !important;
+    right: 1.5rem !important;
+  }
+  .icon-styling_commant_count {
+    position: absolute !important;
+    top: 24rem !important;
+    right: 2.6rem !important;
+  }
+  .icon-styling_share {
+    position: absolute !important;
+    top: 26rem !important;
+    right: 1.5rem !important;
+  }
+  .icon-styling_report {
+    position: absolute !important;
+    top: 30rem !important;
+    right: 1.5rem !important;
+  }
+  .card1 {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 1rem !important;
+    height: 60% !important;
+  }
+  .card2 {
+    position: absolute !important;
+    bottom: 0.2rem !important;
+    left: 1rem !important;
+    width: 100% !important;
+  }
+  .fa .fa_text {
+    font-size: 18px !important;
+    color: azure !important;
+    margin-top: 2.2% !important;
+    margin-left: 0.5rem !important;
+    font-family: Abhaya Libre, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+  }
+}
+@media only screen and (max-width: 1023px) and (min-width: 768px) {
+  .card1 {
+    height: 71vh !important;
+  }
+  .card2 {
+    width: 100% !important;
+  }
+
+  .fixed-width-video {
+    max-width: 100%;
+    width: 100%;
+  }
+  .fa .fa_text {
+    font-size: 23px !important;
+    color: azure !important;
+    margin-top: 2.2% !important;
+    margin-left: 0.5rem !important;
+    font-family: Abhaya Libre, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+  }
+}
+@media only screen and (max-width: 1444px) and (min-width: 1024px) {
+  .video-box video {
+    height: 89vh !important;
+  }
+
+  .fixed-width-video {
+    max-width: 100%;
+    width: 100%;
+  }
+  .fa .fa_text {
+    font-size: 17px !important;
+    color: azure !important;
+    margin-top: 2.2% !important;
+    margin-left: 0.5rem !important;
+    font-family: Abhaya Libre, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+  }
+}
+.Reels_Slider {
+}
+.commant_Heading_mobile {
+  color: #000 !important;
+  font-family: "Port Lligat Sans", sans-serif !important;
+  font-size: 20px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  text-align: center !important;
+}
