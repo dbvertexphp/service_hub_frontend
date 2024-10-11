@@ -174,19 +174,6 @@ function Tables() {
                           {user.product_weight}
                         </MDTypography>
                       ),
-
-                      // action: (
-                      //   <MDTypography
-                      //     component="a"
-                      //     variant="caption"
-                      //     color="text"
-                      //     fontWeight="medium"
-                      //     sx={{ cursor: "pointer" }}
-                      //     onClick={() => editcategoryfun(user._id, user.startDate)}
-                      //   >
-                      //     Edit
-                      //   </MDTypography>
-                      // ),
                       action: (
                         <MDTypography
                           component="a"

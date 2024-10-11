@@ -53,7 +53,7 @@ import Post_tables from "Admin/layouts/post_tables";
 import Reels_tables from "Admin/layouts/reel_tables";
 import Job_tables from "Admin/layouts/job_tables";
 import Contact_tables from "Admin/layouts/contact_tables";
-import Product_tables from "Admin/layouts/product_list";
+import Service_tables from "Admin/layouts/service_list";
 import Fertilizer_tables from "Admin/layouts/fertilizer_list";
 import Tools_tables from "Admin/layouts/tools_list";
 import Update_Payments from "Admin/layouts/update_payments";
@@ -465,7 +465,14 @@ const routes = [
     route: "/post-list",
     component: <Post_tables />,
   },
-
+  {
+    type: "collapse",
+    name: "Booking List",
+    key: "booking-list",
+    icon: <MdLeaderboard />,
+    route: "/booking-list",
+    component: <Transaction_tables />,
+  },
   {
     type: "collapse",
     name: "User Transaction List",
@@ -516,11 +523,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Product List",
-    key: "product-list",
+    name: "Service List",
+    key: "service-list",
     icon: <Icon fontSize="small">leaderboard</Icon>,
-    route: "/product-list",
-    component: <Product_tables />,
+    route: "/service-list",
+    component: <Service_tables />,
   },
   {
     type: "collapse",

@@ -699,11 +699,29 @@ export const Api = {
   },
 
   // -------------- Product apis ------------------//
-  getAllProductsInAdmin: async (page) => {
+  //   getAllProductsInAdmin: async (page) => {
+  //     try {
+  //       // Perform an API request to get all courses with pagination
+  //       const response = await axios.get(
+  //         `${base_url}/api/supplier/getAllProductsInAdmin?page=${page}`,
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             "X-API-KEY": API_KEY,
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       return response.data;
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   },
+  getAllServicesInAdmin: async (page) => {
     try {
       // Perform an API request to get all courses with pagination
       const response = await axios.get(
-        `${base_url}/api/supplier/getAllProductsInAdmin?page=${page}`,
+        `${base_url}/api/services/getAllServicesInAdmin?page=${page}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -715,6 +733,46 @@ export const Api = {
       return response.data;
     } catch (error) {
       throw error;
+    }
+  },
+
+  getAllTransactionsInAdmin: async (page) => {
+    try {
+      // Perform an API request to get all courses with pagination
+      const response = await axios.get(
+        `${base_url}/api/transaction/getAllTransactionsInAdmin?page=${page}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": API_KEY,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  updateTransactionStatus: async (transaction_id, newStatus) => {
+    try {
+      const response = await axios.post(
+        `${base_url}/api/transaction/updateTransactionStatus`,
+        { transaction_id, status: newStatus }, // Pass the data in the request body
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": API_KEY, // Ensure that API_KEY is defined
+            Authorization: `Bearer ${token}`, // Ensure that token is valid
+          },
+        }
+      );
+
+      return response.data; // Return the API response data
+    } catch (error) {
+      console.error("Error updating transaction status:", error.response?.data || error.message);
+      throw error; // Re-throw the error after logging
     }
   },
 
@@ -781,10 +839,10 @@ export const Api = {
     }
   },
 
-  addFertilizer: async (formData, token) => {
+  createService: async (formData, token) => {
     try {
       // Perform an API request to create a user here
-      const response = await axios.post(`${base_url}/api/fertilizer/addFertilizer`, formData, {
+      const response = await axios.post(`${base_url}/api/services/createService`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "X-API-KEY": API_KEY,
@@ -917,11 +975,11 @@ export const Api = {
     }
   },
 
-  updateProductDefaultStatus: async (productId, default_product) => {
+  updateServiceStatus: async (serviceId, active) => {
     try {
       const response = await axios.post(
-        `${base_url}/api/supplier/updateProductDefaultStatus`,
-        { productId, default_product },
+        `${base_url}/api/services/updateServiceStatus`,
+        { serviceId, active },
         {
           headers: {
             "Content-Type": "application/json",

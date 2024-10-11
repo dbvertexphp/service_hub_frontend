@@ -15,6 +15,9 @@ import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import EditCourseDate from "../components/editcoursedate";
+import { useNavigate } from "react-router-dom";
 
 function Tables() {
   const [userData, setUserData] = useState([]);
@@ -22,15 +25,17 @@ function Tables() {
   const [totalPages, setTotalPages] = useState(1);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [showModel, setShowModel] = useState(false);
+  const navigate = useNavigate();
   const base_url = process.env.REACT_APP_BASE_URL;
 
   const fetchData = async (page) => {
     try {
-      const response = await Api.getAllProductsInAdmin(page, "");
-      if (response && Array.isArray(response.products)) {
-        const { products, totalPages } = response;
-        setUserData(products);
+      const response = await Api.getAllServicesInAdmin(page, "");
+
+      if (response && Array.isArray(response.services)) {
+        const { services, totalPages } = response;
+        setUserData(services);
         setTotalPages(totalPages);
       } else {
         console.error("Invalid API response format:", response);
@@ -40,9 +45,9 @@ function Tables() {
     }
   };
 
-  const UserAdminStatusUpdate = async (productId, newStatus) => {
+  const UserAdminStatusUpdate = async (serviceId, newStatus) => {
     try {
-      const response = await Api.updateProductStatus(productId, newStatus);
+      const response = await Api.updateServiceStatus(serviceId, newStatus);
       if (response.status) {
         setUpdateSuccess(true);
         fetchData(page);
@@ -52,38 +57,20 @@ function Tables() {
     }
   };
 
-  const handleChange = (productId, currentStatus) => {
+  const handleChange = (serviceId, currentStatus) => {
     const updatedStatus = !currentStatus;
-    UserAdminStatusUpdate(productId, updatedStatus);
+    UserAdminStatusUpdate(serviceId, updatedStatus);
   };
-
-  const updateProductDefaultStatus = async (productId, newStatus) => {
-    try {
-      const response = await Api.updateProductDefaultStatus(productId, newStatus);
-      if (response.status) {
-        setUpdateSuccess(true);
-        // Refetch data to ensure the UI is updated
-        fetchData(page);
-      } else {
-        // Set error message if there's an issue
-        setErrorMessage("Cannot set default_product to true for more than 4 products."); // Assuming 'message' is returned from backend
-      }
-    } catch (error) {
-      console.error("Error updating product status:", error);
-    }
-  };
-
-  const handleCheckboxChange = (productId, currentStatus) => {
-    const newStatus = !currentStatus;
-    updateProductDefaultStatus(productId, newStatus);
-  };
-
   useEffect(() => {
     fetchData(page);
   }, [page]);
 
   const handlePageChange = (event, value) => {
     setPage(value);
+  };
+
+  const handlePageClick = () => {
+    navigate(`/add-fertilizer-product`);
   };
 
   return (
@@ -104,7 +91,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Product List
+                  Service List
                 </MDTypography>
               </MDBox>
               {errorMessage && (
@@ -116,56 +103,57 @@ function Tables() {
               {/* Show error message if there's an error */}
               {errorMessage && <div className="error-message">{errorMessage}</div>}
               <MDBox pt={3}>
+                <Button
+                  sx={{
+                    float: "right",
+                    backgroundColor: "#007bff",
+                    color: "#ffffff",
+                    margin: "15px",
+                  }}
+                  onClick={handlePageClick}
+                  variant="contained"
+                >
+                  Add Services
+                </Button>
                 <DataTable
                   table={{
                     columns: [
-                      { Header: "English_Name", accessor: "English_Name", align: "left" },
-                      { Header: "Local_Name", accessor: "Local_Name", align: "center" },
-                      { Header: "Other_Name", accessor: "Other_Name", align: "center" },
-                      { Header: "Product_Image", accessor: "Product_Image", align: "center" },
-                      { Header: "Product_Price", accessor: "Product_Price", align: "center" },
-                      { Header: "Quantity", accessor: "Quantity", align: "center" },
-                      { Header: "Product_Type", accessor: "Product_Type", align: "center" },
-                      { Header: "Product_Size", accessor: "Product_Size", align: "center" },
+                      { Header: "Service_Name", accessor: "Service_Name", align: "left" },
+                      { Header: "Service_Amount", accessor: "Service_Amount", align: "center" },
+                      { Header: "Service_Image", accessor: "Service_Image", align: "center" },
+                      {
+                        Header: "Service_Description",
+                        accessor: "Service_Description",
+                        align: "center",
+                      },
                       { Header: "action", accessor: "action", align: "center" },
-                      { Header: "default_product", accessor: "default_product", align: "center" },
                     ],
                     rows: userData.map((user) => ({
-                      English_Name: (
+                      Service_Name: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
                             <MDTypography display="block" variant="button" fontWeight="medium">
-                              {user.english_name}
+                              {user.service_name}
                             </MDTypography>
                           </MDBox>
                         </MDBox>
                       ),
-                      Local_Name: (
+                      Service_Amount: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.local_name}
+                          {user.service_amount}
                         </MDTypography>
                       ),
-                      Other_Name: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.other_name}
-                        </MDTypography>
-                      ),
-                      Product_Image: (
+                      Service_Image: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
-                            {user.product_images ? (
+                            {user.service_images ? (
                               <img
-                                src={`${base_url}/${user.product_images[0]}`}
+                                src={`${base_url}/${user.service_images[0]}`}
                                 alt="Product Image"
                                 style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
                               />
@@ -179,44 +167,14 @@ function Tables() {
                           </MDBox>
                         </MDBox>
                       ),
-                      Product_Price: (
+                      Service_Description: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.price}
-                        </MDTypography>
-                      ),
-                      Quantity: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.quantity}
-                        </MDTypography>
-                      ),
-                      Product_Type: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.product_type}
-                        </MDTypography>
-                      ),
-                      Product_Size: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.product_size}
+                          {user.service_description}
                         </MDTypography>
                       ),
                       action: (
@@ -239,27 +197,12 @@ function Tables() {
                           </FormGroup>
                         </MDTypography>
                       ),
-                      default_product: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          <FormGroup>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  checked={user.default_product} // Bind the checkbox to the `default_product` status
-                                  onChange={() =>
-                                    handleCheckboxChange(user._id, user.default_product)
-                                  } // Call the API when the checkbox is toggled
-                                  inputProps={{ "aria-label": "default product checkbox" }}
-                                />
-                              }
-                            />
-                          </FormGroup>
-                        </MDTypography>
+                      editCategoryComponent: showModel && (
+                        <EditCourseDate
+                          onClose={() => setShowModel(false)}
+                          courseId={courseId}
+                          courseStartDate={courseStartDate}
+                        />
                       ),
                     })),
                   }}
@@ -284,6 +227,13 @@ function Tables() {
         </Grid>
       </MDBox>
       <Footer />
+      {showModel && (
+        <EditCourseDate
+          onClose={() => setShowModel(false)}
+          courseId={courseId}
+          courseStartDate={courseStartDate}
+        />
+      )}
     </DashboardLayout>
   );
 }

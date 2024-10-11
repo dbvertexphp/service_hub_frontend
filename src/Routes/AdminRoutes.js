@@ -8,7 +8,7 @@ import Supplier_Tables from "Admin/layouts/supplier_tables";
 
 import Category_tables from "Admin/layouts/category_tables";
 import Contact_tables from "Admin/layouts/contact_tables";
-import Product_tables from "Admin/layouts/product_list";
+import Service_tables from "Admin/layouts/service_list";
 import Fertilizer_tables from "Admin/layouts/fertilizer_list";
 import Tools_tables from "Admin/layouts/tools_list";
 import Update_Payments from "Admin/layouts/update_payments";
@@ -30,6 +30,7 @@ import Notification_tables from "Admin/layouts/components/notification";
 import SubCategoryList from "Admin/layouts/subCategoryList";
 import OrderProductList from "Admin/layouts/order_product_list";
 // import TestTable from "Admin/layouts/testTable";
+import { MdLeaderboard } from "react-icons/md";
 
 import Icon from "@mui/material/Icon";
 
@@ -108,14 +109,14 @@ const routes = [
     route: "/contact-list",
     component: <Contact_tables />,
   },
-  //   {
-  //     type: "collapse",
-  //     name: "Product List",
-  //     key: "product-list",
-  //     icon: <Icon fontSize="small">leaderboard</Icon>,
-  //     route: "/product-list",
-  //     component: <Product_tables />,
-  //   },
+  {
+    type: "collapse",
+    name: "Service List",
+    key: "service-list",
+    icon: <Icon fontSize="small">leaderboard</Icon>,
+    route: "/service-list",
+    component: <Service_tables />,
+  },
 
   //   {
   //     type: "collapse",
@@ -149,6 +150,14 @@ const routes = [
   //     route: "/order-product-list",
   //     component: <OrderProductList />,
   //   },
+  {
+    type: "collapse",
+    name: "Booking List",
+    key: "booking-list",
+    icon: <MdLeaderboard />,
+    route: "/booking-list",
+    component: <Transaction_tables />,
+  },
   {
     type: "collapse",
     name: "User Transaction List",
