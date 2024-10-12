@@ -68,7 +68,7 @@ function AddCategory() {
             <Card>
               <MDBox p={2}>
                 <MDBox p={2} style={{ textAlign: "center" }} lineHeight={0}>
-                  <MDTypography variant="h5">Add Fertilizer Product</MDTypography>
+                  <MDTypography variant="h5">Add Banner Image</MDTypography>
                 </MDBox>
                 <AddCategoryForm /> {/* Use the AddUserForm component here */}
               </MDBox>

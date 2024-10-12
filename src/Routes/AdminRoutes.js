@@ -9,7 +9,7 @@ import Supplier_Tables from "Admin/layouts/supplier_tables";
 import Category_tables from "Admin/layouts/category_tables";
 import Contact_tables from "Admin/layouts/contact_tables";
 import Service_tables from "Admin/layouts/service_list";
-import Fertilizer_tables from "Admin/layouts/fertilizer_list";
+import Banner_tables from "Admin/layouts/banner_list";
 import Tools_tables from "Admin/layouts/tools_list";
 import Update_Payments from "Admin/layouts/update_payments";
 import OrderList from "Admin/layouts/order_list";
@@ -118,14 +118,14 @@ const routes = [
     component: <Service_tables />,
   },
 
-  //   {
-  //     type: "collapse",
-  //     name: "Fertilizer List",
-  //     key: "fertilizer-list",
-  //     icon: <Icon fontSize="small">leaderboard</Icon>,
-  //     route: "/fertilizer-list",
-  //     component: <Fertilizer_tables />,
-  //   },
+  {
+    type: "collapse",
+    name: "Banner List",
+    key: "banner-list",
+    icon: <Icon fontSize="small">leaderboard</Icon>,
+    route: "/banner-list",
+    component: <Banner_tables />,
+  },
   //   {
   //     type: "collapse",
   //     name: "Tools List",

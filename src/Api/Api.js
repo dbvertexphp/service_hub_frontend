@@ -791,10 +791,10 @@ export const Api = {
       throw error;
     }
   },
-  getAllFertilizer: async (page) => {
+  getAllBanners: async (page) => {
     try {
       // Perform an API request to get all courses with pagination
-      const response = await axios.get(`${base_url}/api/fertilizer/getAllFertilizer?page=${page}`, {
+      const response = await axios.get(`${base_url}/api/banner/getAllBanners`, {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": API_KEY,
@@ -807,10 +807,10 @@ export const Api = {
     }
   },
 
-  deleteFertilizer: async (data) => {
+  deleteBanner: async (bannerId) => {
     try {
       // Perform an API request to get all courses with pagination
-      const response = await axios.post(`${base_url}/api/fertilizer/deleteFertilizer`, data, {
+      const response = await axios.delete(`${base_url}/api/banner/deleteBanner/${bannerId}`, {
         headers: {
           "Content-Type": "application/json",
           "X-API-KEY": API_KEY,
@@ -839,10 +839,10 @@ export const Api = {
     }
   },
 
-  createService: async (formData, token) => {
+  addBanner: async (formData, token) => {
     try {
       // Perform an API request to create a user here
-      const response = await axios.post(`${base_url}/api/services/createService`, formData, {
+      const response = await axios.post(`${base_url}/api/banner/addBanner`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "X-API-KEY": API_KEY,

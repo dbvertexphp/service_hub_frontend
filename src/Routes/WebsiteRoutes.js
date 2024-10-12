@@ -54,7 +54,7 @@ import Reels_tables from "Admin/layouts/reel_tables";
 import Job_tables from "Admin/layouts/job_tables";
 import Contact_tables from "Admin/layouts/contact_tables";
 import Service_tables from "Admin/layouts/service_list";
-import Fertilizer_tables from "Admin/layouts/fertilizer_list";
+import Banner_tables from "Admin/layouts/banner_list";
 import Tools_tables from "Admin/layouts/tools_list";
 import Update_Payments from "Admin/layouts/update_payments";
 import Hire_tables from "Admin/layouts/hire_tables";
@@ -531,11 +531,11 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Fertilizer List",
-    key: "fertilizer-list",
+    name: "Banner List",
+    key: "banner-list",
     icon: <Icon fontSize="small">leaderboard</Icon>,
-    route: "/fertilizer-list",
-    component: <Fertilizer_tables />,
+    route: "/banner-list",
+    component: <Banner_tables />,
   },
   {
     type: "collapse",

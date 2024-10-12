@@ -24,12 +24,13 @@ function Tables() {
 
   const base_url = process.env.REACT_APP_BASE_URL;
 
-  const fetchData = async (page) => {
+  const fetchData = async () => {
     try {
-      const response = await Api.getAllFertilizer(page, "");
-      if (response && Array.isArray(response.fertilizer)) {
-        const { fertilizer, totalPages } = response;
-        setUserData(fertilizer);
+      const response = await Api.getAllBanners();
+      console.log(response);
+      if (response && Array.isArray(response.banner)) {
+        const { banner } = response;
+        setUserData(banner);
         setTotalPages(totalPages);
       } else {
         console.error("Invalid API response format:", response);
@@ -39,12 +40,9 @@ function Tables() {
     }
   };
 
-  const deleteProduct = async (product_id) => {
-    const data = {
-      product_id: product_id,
-    };
+  const deleteBanner = async (bannerId) => {
     try {
-      const response = await Api.deleteFertilizer(data);
+      const response = await Api.deleteBanner(bannerId);
       if (response) {
         console.log(response);
         fetchData();
@@ -85,7 +83,7 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Product List
+                  Banner List
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
@@ -99,81 +97,47 @@ function Tables() {
                   onClick={handlePageClick}
                   variant="contained"
                 >
-                  Add Fertilizer
+                  Add Banner
                 </Button>
                 <DataTable
                   table={{
                     columns: [
-                      { Header: "Product_Name", accessor: "Product_Name", align: "left" },
-
-                      { Header: "Product_Image", accessor: "Product_Image", align: "center" },
-                      { Header: "Product_Price", accessor: "Product_Price", align: "center" },
-                      { Header: "Quantity", accessor: "Quantity", align: "center" },
-                      { Header: "Product_weight", accessor: "Product_weight", align: "center" },
-
+                      { Header: "Banner_Title", accessor: "Banner_Title", align: "left" },
+                      { Header: "Banner_Image", accessor: "Banner_Image", align: "center" },
                       { Header: "action", accessor: "action", align: "center" },
                     ],
 
                     rows: userData.map((user) => ({
-                      Product_Name: (
+                      Banner_Title: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
                             <MDTypography display="block" variant="button" fontWeight="medium">
-                              {user.english_name}
+                              {user.title}
                             </MDTypography>
                           </MDBox>
                         </MDBox>
                       ),
 
-                      Product_Image: (
+                      Banner_Image: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
-                            {user.product_image ? (
+                            {user.image ? (
                               <img
-                                src={`${base_url}/${user.product_images[0]}`}
-                                alt="Product Image"
+                                src={`${base_url}/${user.image}`}
+                                alt="Banner Image"
                                 style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
                               />
                             ) : (
                               <img
                                 src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" // Replace with your default image path
-                                alt="Default Product Image"
+                                alt="Default banner Image"
                                 style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
                               />
                             )}
                           </MDBox>
                         </MDBox>
                       ),
-                      Product_Price: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.price}
-                        </MDTypography>
-                      ),
-                      Quantity: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.quantity}
-                        </MDTypography>
-                      ),
-                      Product_weight: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.product_weight}
-                        </MDTypography>
-                      ),
+
                       action: (
                         <MDTypography
                           component="a"
@@ -181,7 +145,7 @@ function Tables() {
                           color="text"
                           fontWeight="medium"
                           sx={{ cursor: "pointer" }}
-                          onClick={() => deleteProduct(user._id)}
+                          onClick={() => deleteBanner(user._id)}
                         >
                           Delete
                         </MDTypography>
