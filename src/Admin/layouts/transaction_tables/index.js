@@ -164,7 +164,9 @@ function Tables() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.service_id.service_name}
+                          {user.service_id && user.service_id.service_name
+                            ? user.service_id.service_name
+                            : "N/A"}
                         </MDTypography>
                       ),
                       Service_Image: (

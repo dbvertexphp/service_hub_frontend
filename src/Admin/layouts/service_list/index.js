@@ -73,6 +73,26 @@ function Tables() {
     navigate(`/add-fertilizer-product`);
   };
 
+  const truncateDescription = (description, maxLength = 100) => {
+    if (description.length <= maxLength) {
+      return description;
+    }
+    return description.slice(0, maxLength) + "...";
+  };
+
+  const deleteService = async (id) => {
+    try {
+      const response = await Api.deleteService(id);
+      if (response) {
+        fetchData();
+      } else {
+        console.error("Invalid API response format:", response);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -127,6 +147,7 @@ function Tables() {
                         align: "center",
                       },
                       { Header: "action", accessor: "action", align: "center" },
+                      { Header: "delete", accessor: "delete", align: "center" },
                     ],
                     rows: userData.map((user) => ({
                       Service_Name: (
@@ -174,7 +195,7 @@ function Tables() {
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.service_description}
+                          {truncateDescription(user.service_description, 50)}{" "}
                         </MDTypography>
                       ),
                       action: (
@@ -195,6 +216,18 @@ function Tables() {
                               }
                             />
                           </FormGroup>
+                        </MDTypography>
+                      ),
+                      delete: (
+                        <MDTypography
+                          component="a"
+                          variant="caption"
+                          color="text"
+                          fontWeight="medium"
+                          sx={{ cursor: "pointer" }}
+                          onClick={() => deleteService(user._id)}
+                        >
+                          Delete
                         </MDTypography>
                       ),
                       editCategoryComponent: showModel && (

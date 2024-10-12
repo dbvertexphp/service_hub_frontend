@@ -823,6 +823,22 @@ export const Api = {
     }
   },
 
+  deleteService: async (id) => {
+    try {
+      // Perform an API request to get all courses with pagination
+      const response = await axios.delete(`${base_url}/api/services/deleteService/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   deleteTools: async (data) => {
     try {
       // Perform an API request to get all courses with pagination

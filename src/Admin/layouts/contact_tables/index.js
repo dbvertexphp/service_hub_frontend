@@ -108,7 +108,7 @@ function Tables() {
           setCurrentpage(response.Users.current_page);
           return {
             _id: user.user._id,
-            view_count: user.user.email_id,
+            view_count: user.user.email,
             description: user.user.message,
             title: user.user.mobile_number,
             name: user.user.name,
