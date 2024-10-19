@@ -135,13 +135,8 @@ function Tables() {
                         align: "center",
                       },
                       {
-                        Header: "Payment_Id",
-                        accessor: "Payment_Id",
-                        align: "center",
-                      },
-                      {
-                        Header: "Payment_Status",
-                        accessor: "Payment_Status",
+                        Header: "Order_Id",
+                        accessor: "Order_Id",
                         align: "center",
                       },
                       { Header: "Datetime", accessor: "Datetime", align: "center" },
@@ -188,14 +183,14 @@ function Tables() {
                           </MDBox>
                         </MDBox>
                       ),
-                      Payment_Id: (
+                      Order_Id: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.payment_id}
+                          {user.order_id && user.order_id ? user.order_id : "N/A"}
                         </MDTypography>
                       ),
                       Payment_Status: (
@@ -239,9 +234,8 @@ function Tables() {
                         >
                           <MenuItem value="">Select Status</MenuItem>
                           <MenuItem value="Waiting">Waiting</MenuItem>
-                          <MenuItem value="InProgress">InProgress</MenuItem>
-                          <MenuItem value="Completed">Completed</MenuItem>
-                          <MenuItem value="cancelled">Cancelled</MenuItem>
+                          <MenuItem value="Accepted">Accepted</MenuItem>
+                          <MenuItem value="Rejected">Rejected</MenuItem>
                         </Select>
                       ),
                       editCategoryComponent: showModel && (
