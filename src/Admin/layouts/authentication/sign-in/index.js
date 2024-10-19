@@ -102,7 +102,7 @@ function Basic() {
           top: "0px", // Adjust position from the top
         }}
       >
-        {/*<img
+        <img
           src={Aruyog_logo}
           alt="Aruyog Logo"
           style={{
@@ -114,7 +114,7 @@ function Basic() {
             transform: "translate(-50%, -50%)",
             objectFit: "contain",
           }}
-        />*/}
+        />
       </div>
       <Card>
         <MDBox

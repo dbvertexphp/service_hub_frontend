@@ -61,7 +61,8 @@ import Hire_tables from "Admin/layouts/hire_tables";
 import Report_tables from "Admin/layouts/report_tables";
 import Profile from "Admin/layouts/profile";
 import Addcategory from "Admin/layouts/addcategory";
-import AddFertilizerProduct from "Admin/layouts/addFertilizerProduct";
+import AddBannerImage from "Admin/layouts/addBannerImage";
+import AddService from "Admin/layouts/addService";
 import AddTools from "Admin/layouts/addTools";
 import Addprivacypolicy from "Admin/layouts/addPrvicayPolicy";
 import Addaboutus from "Admin/layouts/addAboutUs";
@@ -442,11 +443,19 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Add Fertilizer Product",
-    key: "add-fertilizer-product",
+    name: "Add Service",
+    key: "add-service",
     icon: <Icon fontSize="small">leaderboard</Icon>,
-    route: "/add-fertilizer-product",
-    component: <AddFertilizerProduct />,
+    route: "/add-service",
+    component: <AddService />,
+  },
+  {
+    type: "collapse",
+    name: "Add Banner Image",
+    key: "add-banner-image",
+    icon: <Icon fontSize="small">leaderboard</Icon>,
+    route: "/add-banner-image",
+    component: <AddBannerImage />,
   },
   {
     type: "collapse",

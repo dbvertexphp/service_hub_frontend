@@ -1,6 +1,6 @@
 /**
 =========================================================
-* 
+*
 =========================================================
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
@@ -69,9 +69,9 @@ function Footer({ company, links }) {
           </Icon> */}
         </MDBox>
         by
-        <Link href="http://dbvertex.com/">
+        <Link>
           <MDTypography variant="button" fontWeight="medium">
-            &nbsp;Ajugnu. &nbsp;
+            &nbsp;Service Hub. &nbsp;
           </MDTypography>
         </Link>
         All rights reserved.

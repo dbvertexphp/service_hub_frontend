@@ -1010,6 +1010,22 @@ export const Api = {
     }
   },
 
+  addService: async (formData, token) => {
+    try {
+      // Perform an API request to create a user here
+      const response = await axios.post(`${base_url}/api/services/createService`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-API-KEY": API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // -------------- Report apis ------------------//
   getAllReports: async (page, search) => {
     try {

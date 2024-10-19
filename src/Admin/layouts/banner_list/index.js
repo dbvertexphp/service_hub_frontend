@@ -62,7 +62,7 @@ function Tables() {
     setPage(value);
   };
   const handlePageClick = () => {
-    navigate(`/add-fertilizer-product`);
+    navigate(`/add-banner-image`);
   };
 
   return (

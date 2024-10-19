@@ -62,7 +62,7 @@ function Tables() {
           return {
             _id: user.user._id,
             pic: user.user.pic,
-            full_name: user.user.full_name,
+            full_name: user.user.first_name + " " + user.user.last_name,
             email: user.user.email,
             mobile: defaultMobile,
             Pincode: defaultPincode,
@@ -137,25 +137,41 @@ function Tables() {
   };
 
   const handleMobileChange = (event, userId) => {
-    const newUserData = userData.map((user) => {
-      if (user._id === userId) {
-        return { ...user, mobile: event.target.value };
-      }
-      return user;
-    });
-    setUserData(newUserData);
+    const newValue = event.target.value;
+
+    // Allow only up to 10 digits
+    if (newValue.length <= 10) {
+      const newUserData = userData.map((user) => {
+        if (user._id === userId) {
+          return { ...user, mobile: newValue };
+        }
+        return user;
+      });
+      setUserData(newUserData);
+    }
   };
 
   const handleMobileUpdate = async (UserId, mobile) => {
+    // Check if the mobile number is exactly 10 digits
+    if (mobile.length !== 10) {
+      alert("Mobile number must be exactly 10 digits.");
+      return; // Prevent further execution if the number is not valid
+    }
+
     try {
       const response = await Api.UpdateMobileAdmin(UserId, mobile);
       alert(response.message);
+
+      // Update the userData state with the new mobile number
       const updatedUserData = userData.map((user) => {
         if (user._id === UserId) {
           return { ...user, mobile: mobile };
         }
         return user;
       });
+
+      // Set the updated data back into the state
+      setUserData(updatedUserData);
     } catch (error) {
       console.error("Error updating mobile number:", error);
     }
@@ -273,11 +289,13 @@ function Tables() {
                                 variant="outlined"
                                 value={user.mobile}
                                 onChange={(event) => handleMobileChange(event, user._id)}
+                                inputProps={{ maxLength: 10 }}
                               />
                               <Button
-                                sx={{ marginLeft: "5px", marginTop: "5px" }}
+                                sx={{ marginLeft: "5px", marginTop: "5px", color: "#fff" }}
                                 size="small"
                                 variant="contained"
+                                max
                                 onClick={() => handleMobileUpdate(user._id, user.mobile)}
                               >
                                 Update

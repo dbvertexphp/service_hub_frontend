@@ -70,7 +70,7 @@ function Tables() {
   };
 
   const handlePageClick = () => {
-    navigate(`/add-fertilizer-product`);
+    navigate(`/add-service`);
   };
 
   const truncateDescription = (description, maxLength = 100) => {
@@ -154,7 +154,7 @@ function Tables() {
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
                             <MDTypography display="block" variant="button" fontWeight="medium">
-                              {user.service_name}
+                              {user.service_name && user.service_name}
                             </MDTypography>
                           </MDBox>
                         </MDBox>
