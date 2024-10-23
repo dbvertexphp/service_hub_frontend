@@ -20,6 +20,7 @@ import EditCourseDate from "../components/editcoursedate";
 import { useNavigate } from "react-router-dom";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 
 function Tables() {
   const [userData, setUserData] = useState([]);
@@ -29,11 +30,12 @@ function Tables() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showModel, setShowModel] = useState(false);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
   const base_url = process.env.REACT_APP_BASE_URL;
 
-  const fetchData = async (page) => {
+  const fetchData = async (page = 1, searchQuery) => {
     try {
-      const response = await Api.getAllTransactionsInAdmin(page, "");
+      const response = await Api.getAllTransactionsInAdmin(page, searchQuery);
       console.log(response);
 
       if (response && Array.isArray(response.transaction)) {
@@ -65,8 +67,8 @@ function Tables() {
     UserAdminStatusUpdate(serviceId, updatedStatus);
   };
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    fetchData(page, searchQuery);
+  }, [page, searchQuery]);
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -80,7 +82,6 @@ function Tables() {
       setUpdateSuccess(true);
       if (response.status) {
         setUpdateSuccess(true);
-        // Refresh the data after updating status
       }
     } catch (error) {
       console.error("Error updating status:", error);
@@ -91,6 +92,10 @@ function Tables() {
   const handleStatusChange = (event, transaction_id) => {
     const newStatus = event.target.value;
     updateTransactionStatus(transaction_id, newStatus);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
   };
 
   return (
@@ -114,154 +119,166 @@ function Tables() {
                   Booking List
                 </MDTypography>
               </MDBox>
+
+              {/* Show error message if there's an error */}
               {errorMessage && (
                 <Alert variant="filled" severity="error">
                   {errorMessage}
                 </Alert>
               )}
 
-              {/* Show error message if there's an error */}
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
               <MDBox pt={3}>
-                <DataTable
-                  table={{
-                    columns: [
-                      { Header: "Name", accessor: "Name", align: "left" },
-                      { Header: "Service_Name", accessor: "Service_Name", align: "center" },
-                      { Header: "Service_Image", accessor: "Service_Image", align: "center" },
-                      {
-                        Header: "Total_Amount",
-                        accessor: "Total_Amount",
-                        align: "center",
-                      },
-                      {
-                        Header: "Order_Id",
-                        accessor: "Order_Id",
-                        align: "center",
-                      },
-                      { Header: "Datetime", accessor: "Datetime", align: "center" },
-                      { Header: "Status", accessor: "Status", align: "center" },
-                    ],
-                    rows: userData.map((user) => ({
-                      Name: (
-                        <MDBox display="flex" alignItems="center" lineHeight={1}>
-                          <MDBox ml={2} lineHeight={1}>
+                {/* Search input for filtering users */}
+                <TextField
+                  label="Search"
+                  variant="outlined"
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  sx={{ m: 3 }}
+                />
+                {/* Show message when no data is found */}
+                {userData.length === 0 ? (
+                  <p style={{ textAlign: "center", fontWeight: "500", paddingBottom: "10px" }}>
+                    No Data Found
+                  </p>
+                ) : (
+                  <>
+                    <DataTable
+                      table={{
+                        columns: [
+                          { Header: "Order_Id", accessor: "Order_Id", align: "left" },
+                          { Header: "Name", accessor: "Name", align: "center" },
+                          { Header: "Service_Name", accessor: "Service_Name", align: "center" },
+                          { Header: "Service_Image", accessor: "Service_Image", align: "center" },
+                          { Header: "Total_Amount", accessor: "Total_Amount", align: "center" },
+                          { Header: "Datetime", accessor: "Datetime", align: "center" },
+                          { Header: "Status", accessor: "Status", align: "center" },
+                        ],
+                        rows: userData.map((user) => ({
+                          Order_Id: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {user.order_id ? user.order_id : "N/A"}
+                            </MDTypography>
+                          ),
+                          Name: (
                             <MDTypography display="block" variant="button" fontWeight="medium">
                               {`${user.user_id.first_name} ${user.user_id.last_name}`}
                             </MDTypography>
-                          </MDBox>
-                        </MDBox>
-                      ),
-                      Service_Name: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.service_id && user.service_id.service_name
-                            ? user.service_id.service_name
-                            : "N/A"}
-                        </MDTypography>
-                      ),
-                      Service_Image: (
-                        <MDBox display="flex" alignItems="center" lineHeight={1}>
-                          <MDBox ml={2} lineHeight={1}>
-                            {user.service_images ? (
-                              <img
-                                src={`${base_url}/${user.service_images[0]}`}
-                                alt="Product Image"
-                                style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
-                              />
-                            ) : (
-                              <img
-                                src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" // Replace with your default image path
-                                alt="Default Product Image"
-                                style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
-                              />
-                            )}
-                          </MDBox>
-                        </MDBox>
-                      ),
-                      Order_Id: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.order_id && user.order_id ? user.order_id : "N/A"}
-                        </MDTypography>
-                      ),
-                      Payment_Status: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.payment_status}
-                        </MDTypography>
-                      ),
-                      Total_Amount: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.total_amount}
-                        </MDTypography>
-                      ),
-                      Datetime: (
-                        <MDTypography
-                          component="a"
-                          variant="caption"
-                          color="text"
-                          fontWeight="medium"
-                        >
-                          {user.datetime}
-                        </MDTypography>
-                      ),
-                      Status: (
-                        <Select
-                          value={user.status} // Current status value
-                          onChange={(event) => handleStatusChange(event, user._id)} // Call your handler
-                          displayEmpty
-                          fullWidth
-                          variant="outlined"
-                          sx={{ minWidth: 120 }} // Adjust the width if necessary
-                        >
-                          <MenuItem value="">Select Status</MenuItem>
-                          <MenuItem value="Waiting">Waiting</MenuItem>
-                          <MenuItem value="Accepted">Accepted</MenuItem>
-                          <MenuItem value="Rejected">Rejected</MenuItem>
-                        </Select>
-                      ),
-                      editCategoryComponent: showModel && (
-                        <EditCourseDate
-                          onClose={() => setShowModel(false)}
-                          courseId={courseId}
-                          courseStartDate={courseStartDate}
-                        />
-                      ),
-                    })),
-                  }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={true}
-                  noEndBorder
-                />
-                <MDBox display="flex" justifyContent="center" mt={3} mb={1}>
-                  <Pagination
-                    count={totalPages}
-                    page={page}
-                    onChange={handlePageChange}
-                    color="primary"
-                    shape="rounded"
-                    size="large"
-                  />
-                </MDBox>
+                          ),
+                          Service_Name: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {user.service_id?.service_name ? user.service_id.service_name : "N/A"}
+                            </MDTypography>
+                          ),
+                          Service_Image: (
+                            <MDBox display="flex" alignItems="center" lineHeight={1}>
+                              <MDBox ml={2} lineHeight={1}>
+                                {user.service_images && user.service_images.length > 0 ? (
+                                  <img
+                                    src={`${base_url}/${user.service_images[0]}`}
+                                    alt="Service Image"
+                                    style={{ maxWidth: "100px", maxHeight: "100px" }}
+                                  />
+                                ) : (
+                                  <img
+                                    src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+                                    alt="Default Service Image"
+                                    style={{ maxWidth: "100px", maxHeight: "100px" }}
+                                  />
+                                )}
+                              </MDBox>
+                            </MDBox>
+                          ),
+                          Total_Amount: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {user.total_amount}
+                            </MDTypography>
+                          ),
+                          Datetime: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {user.datetime}
+                            </MDTypography>
+                          ),
+                          Status: (
+                            <Select
+                              value={user.status} // Current status value
+                              onChange={(event) => handleStatusChange(event, user._id)} // Call your handler
+                              displayEmpty
+                              fullWidth
+                              variant="outlined"
+                              sx={{
+                                minWidth: 120, // Adjust the width if necessary
+                                backgroundColor:
+                                  user.status === "Accepted"
+                                    ? "#FF5733"
+                                    : user.status === "Rejected"
+                                    ? "red"
+                                    : "inherit", // Default background color
+                                color:
+                                  user.status === "Accepted" || user.status === "Rejected"
+                                    ? "#fff" // White text color for Accepted and Rejected
+                                    : "inherit", // Default text color for other statuses like Waiting
+                                "& .MuiSelect-select": {
+                                  color:
+                                    user.status === "Accepted" || user.status === "Rejected"
+                                      ? "#fff" // White text for Accepted and Rejected
+                                      : "inherit", // Default color for Waiting and others
+                                },
+                                "& .MuiOutlinedInput-notchedOutline": {
+                                  borderColor: "#fff", // Ensure border is #fff for outlined variant
+                                },
+                                "&:hover .MuiOutlinedInput-notchedOutline": {
+                                  borderColor: "#fff", // Keep white border on hover
+                                },
+                              }}
+                            >
+                              <MenuItem value="">Select Status</MenuItem>
+                              <MenuItem value="Waiting">Waiting</MenuItem>
+                              <MenuItem value="Accepted">Accepted</MenuItem>
+                              <MenuItem value="Rejected">Rejected</MenuItem>
+                            </Select>
+                          ),
+                        })),
+                      }}
+                      isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={true}
+                      noEndBorder
+                    />
+
+                    {/* Pagination */}
+                    <MDBox display="flex" justifyContent="center" mt={3} mb={1}>
+                      <Pagination
+                        count={totalPages}
+                        page={page}
+                        onChange={handlePageChange}
+                        color="primary"
+                        shape="rounded"
+                        size="large"
+                      />
+                    </MDBox>
+                  </>
+                )}
               </MDBox>
             </Card>
           </Grid>

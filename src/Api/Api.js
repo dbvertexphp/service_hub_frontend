@@ -397,6 +397,22 @@ export const Api = {
     }
   },
 
+  UpdateService: async (formData) => {
+    try {
+      // Perform an API request to create a user here
+      const response = await axios.post(`${base_url}/api/services/updateService`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-API-KEY": API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // --------------Sub Categories apis ------------------//
   addSubCategory: async (formData, token) => {
     try {
@@ -736,11 +752,13 @@ export const Api = {
     }
   },
 
-  getAllTransactionsInAdmin: async (page) => {
+  getAllTransactionsInAdmin: async (page, search) => {
     try {
-      // Perform an API request to get all courses with pagination
+      // Perform an API request to get all transactions with pagination
       const response = await axios.get(
-        `${base_url}/api/transaction/getAllTransactionsInAdmin?page=${page}`,
+        `${base_url}/api/transaction/getAllTransactionsInAdmin?page=${page}&search=${encodeURIComponent(
+          search
+        )}`,
         {
           headers: {
             "Content-Type": "application/json",

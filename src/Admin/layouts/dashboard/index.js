@@ -48,21 +48,14 @@ function Dashboard() {
         const response = await Api.getAllDashboardCount();
         if (response) {
           // Access the properties from the API response
-          const {
-            teacherCount,
-            studentCount,
-            courseCount,
-            transactionTotalAmount,
-            adminnotifications,
-          } = response;
+          const { services, studentCount, booking, notifications } = response;
 
           // Set the data in the state
           setDashboardcount({
-            teacherCount,
+            services,
             studentCount,
-            courseCount,
-            transactionTotalAmount,
-            adminnotifications,
+            booking,
+            notifications,
           });
         } else {
           console.error("Invalid API response format:", response);
@@ -98,47 +91,13 @@ function Dashboard() {
               </Link>
             </MDBox>
           </Grid>
-          {/*<Grid item xs={12} md={6} lg={3}>
+          <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
-              <Link to="/supplier-tables">
+              <Link to="/service-list">
                 <ComplexStatisticsCard
                   icon={<ImUsers />}
-                  title="Supplier Count"
-                  count={dashboardcount.teacherCount}
-                  percentage={{
-                    color: "success",
-                    amount: "",
-                    label: "Just updated",
-                  }}
-                />
-              </Link>
-            </MDBox>
-          </Grid>*/}
-          {/*<Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <Link to="/product-list">
-                <ComplexStatisticsCard
-                  color="success"
-                  icon={<LibraryBooksIcon />}
-                  title="Product Count"
-                  count={dashboardcount.courseCount}
-                  percentage={{
-                    color: "success",
-                    amount: "",
-                    label: "Just updated",
-                  }}
-                />
-              </Link>
-            </MDBox>
-          </Grid>*/}
-          {/*<Grid item xs={12} md={6} lg={3}>
-            <MDBox mb={1.5}>
-              <Link to="/post-list">
-                <ComplexStatisticsCard
-                  color="primary"
-                  icon={<BsChatLeftTextFill />}
-                  title="Timeline Count"
-                  count={dashboardcount.PostTimeline}
+                  title="Services Count"
+                  count={dashboardcount.services}
                   percentage={{
                     color: "success",
                     amount: "",
@@ -149,6 +108,40 @@ function Dashboard() {
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <Link to="/booking-list">
+                <ComplexStatisticsCard
+                  color="success"
+                  icon={<LibraryBooksIcon />}
+                  title="Booking Count"
+                  count={dashboardcount.booking}
+                  percentage={{
+                    color: "success",
+                    amount: "",
+                    label: "Just updated",
+                  }}
+                />
+              </Link>
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={3}>
+            <MDBox mb={1.5}>
+              <Link>
+                <ComplexStatisticsCard
+                  color="primary"
+                  icon={<BsChatLeftTextFill />}
+                  title="Notifications Count"
+                  count={dashboardcount.notifications}
+                  percentage={{
+                    color: "success",
+                    amount: "",
+                    label: "Just updated",
+                  }}
+                />
+              </Link>
+            </MDBox>
+          </Grid>
+          {/*<Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <Link to="/job-list">
                 <ComplexStatisticsCard

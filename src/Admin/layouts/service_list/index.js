@@ -16,11 +16,16 @@ import Checkbox from "@mui/material/Checkbox";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
-import EditCourseDate from "../components/editcoursedate";
+import EditService from "../components/editservice";
 import { useNavigate } from "react-router-dom";
 
 function Tables() {
   const [userData, setUserData] = useState([]);
+  const [serviceId, setServiceId] = useState("");
+  const [serviceName, setServiceName] = useState("");
+  const [serviceDesc, setServiceDesc] = useState("");
+  const [serviceAmount, setServiceAmount] = useState("");
+  const [serviceImage, setServiceImage] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [updateSuccess, setUpdateSuccess] = useState(false);
@@ -74,9 +79,17 @@ function Tables() {
   };
 
   const truncateDescription = (description, maxLength = 100) => {
+    // Check if description is null or undefined, and return an empty string if so
+    if (!description) {
+      return "";
+    }
+
+    // If the description length is less than or equal to maxLength, return it as is
     if (description.length <= maxLength) {
       return description;
     }
+
+    // Otherwise, truncate the description and add "..."
     return description.slice(0, maxLength) + "...";
   };
 
@@ -91,6 +104,19 @@ function Tables() {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const editcategoryfun = (
+    serviceName,
+    serviceId,
+    serviceImage,
+    service_description,
+    service_amount
+  ) => {
+    setServiceName(serviceName);
+    setServiceId(serviceId);
+    setServiceImage(serviceImage);
+    setServiceDesc(service_description), setServiceAmount(service_amount), setShowModel(true);
   };
 
   return (
@@ -148,6 +174,7 @@ function Tables() {
                       },
                       { Header: "action", accessor: "action", align: "center" },
                       { Header: "delete", accessor: "delete", align: "center" },
+                      { Header: "edit", accessor: "edit", align: "center" },
                     ],
                     rows: userData.map((user) => ({
                       Service_Name: (
@@ -175,13 +202,13 @@ function Tables() {
                             {user.service_images ? (
                               <img
                                 src={`${base_url}/${user.service_images[0]}`}
-                                alt="Product Image"
+                                alt="Service Image"
                                 style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
                               />
                             ) : (
                               <img
                                 src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" // Replace with your default image path
-                                alt="Default Product Image"
+                                alt="Default Service Image"
                                 style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
                               />
                             )}
@@ -230,11 +257,34 @@ function Tables() {
                           Delete
                         </MDTypography>
                       ),
+                      edit: (
+                        <MDTypography
+                          component="a"
+                          variant="caption"
+                          color="text"
+                          fontWeight="medium"
+                          sx={{ cursor: "pointer" }}
+                          onClick={() =>
+                            editcategoryfun(
+                              user.service_name,
+                              user._id,
+                              user.service_images,
+                              user.service_description,
+                              user.service_amount
+                            )
+                          }
+                        >
+                          Edit
+                        </MDTypography>
+                      ),
                       editCategoryComponent: showModel && (
-                        <EditCourseDate
+                        <EditService
                           onClose={() => setShowModel(false)}
-                          courseId={courseId}
-                          courseStartDate={courseStartDate}
+                          serviceId={serviceId}
+                          serviceName={serviceName}
+                          serviceImage={serviceImage}
+                          serviceDesc={serviceDesc}
+                          serviceAmount={serviceAmount}
                         />
                       ),
                     })),
@@ -261,10 +311,13 @@ function Tables() {
       </MDBox>
       <Footer />
       {showModel && (
-        <EditCourseDate
+        <EditService
           onClose={() => setShowModel(false)}
-          courseId={courseId}
-          courseStartDate={courseStartDate}
+          serviceId={serviceId}
+          serviceName={serviceName}
+          serviceImage={serviceImage}
+          serviceDesc={serviceDesc}
+          serviceAmount={serviceAmount}
         />
       )}
     </DashboardLayout>
