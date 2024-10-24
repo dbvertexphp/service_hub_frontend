@@ -118,7 +118,7 @@ function AddUserForm() {
         </div>
 
         <MDBox p={2} style={{ textAlign: "center", color: "white" }} lineHeight={0}>
-          <Button variant="contained" color="primary" type="submit">
+          <Button variant="contained" color="primary" type="submit" style={{ color: "#fff" }}>
             Add Service
           </Button>
         </MDBox>

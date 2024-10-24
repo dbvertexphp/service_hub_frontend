@@ -157,10 +157,18 @@ function Tables() {
   const startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
   const endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
 
-  const pageNumbers = Array.from(
-    { length: endPage - startPage + 1 },
-    (_, index) => startPage + index
-  );
+  // Generate the array of page numbers
+  const pageNumbers = [];
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
+  // Check if there is data to paginate
+  const hasData = userData.length > 0;
+
+  // Disable conditions
+  const isPrevDisabled = currentPage <= 1; // Disable if on the first page
+  const isNextDisabled = currentPage >= totalPages || !hasData;
 
   useEffect(() => {
     fetchData(newPage, searchText);
@@ -217,6 +225,7 @@ function Tables() {
                   Contact us List
                 </MDTypography>
               </MDBox>
+
               <div
                 style={{
                   display: "flex",
@@ -297,7 +306,8 @@ function Tables() {
                           <MDPagination
                             item
                             key="prev"
-                            onClick={() => handlePageChange(current_page - 1)}
+                            disabled={isPrevDisabled} // Disable previous button
+                            onClick={() => !isPrevDisabled && handlePageChange(currentPage - 1)}
                           >
                             <span className="admin_paginetions_iocn">
                               <MdKeyboardArrowLeft />
@@ -308,7 +318,7 @@ function Tables() {
                             <MDPagination
                               item
                               key={pageNumber}
-                              active={pageNumber === current_page}
+                              active={pageNumber === currentPage}
                               onClick={() => handlePageChange(pageNumber, search)}
                             >
                               {pageNumber}
@@ -318,7 +328,8 @@ function Tables() {
                           <MDPagination
                             item
                             key="next"
-                            onClick={() => handlePageChange(current_page + 1)}
+                            disabled={isNextDisabled} // Disable next button
+                            onClick={() => !isNextDisabled && handlePageChange(currentPage + 1)}
                           >
                             <span className="admin_paginetions_iocn">
                               <MdKeyboardArrowRight />

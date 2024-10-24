@@ -11,21 +11,30 @@ import Footer from "Admin/examples/Footer";
 import DataTable from "Admin/examples/Tables/DataTable";
 import Button from "@mui/material/Button";
 import { useParams } from "react-router-dom";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import Dialog from "@mui/material/Dialog"; // Import Dialog
+import DialogContent from "@mui/material/DialogContent"; // Import DialogContent
+import DialogTitle from "@mui/material/DialogTitle"; // Import DialogTitle
 
 function Tables() {
   const [userData, setUserData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const { order_id } = useParams();
+  const [open, setOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState("");
 
   const base_url = process.env.REACT_APP_BASE_URL;
 
   const fetchData = async (order_id) => {
     try {
       const response = await Api.getProductsByOrderAndSupplier(order_id);
-      if (response && Array.isArray(response.order)) {
-        const { order } = response;
-        setUserData(order);
+      console.log(response);
+      if (response && response.service) {
+        const service = Array.isArray(response.service) ? response.service : [response.service];
+        console.log(service);
+        setUserData(service);
       } else {
         console.error("Invalid API response format:", response);
       }
@@ -38,12 +47,14 @@ function Tables() {
     fetchData(order_id);
   }, [order_id]);
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
+  const handleImageClick = (image) => {
+    setSelectedImage(image); // Set the clicked image URL
+    setOpen(true); // Open the modal
   };
 
-  const viewProduct = (teacherId) => {
-    // navigate(`/update-teacher-pay/${teacherId}`);
+  const handleClose = () => {
+    setOpen(false); // Close the modal
+    setSelectedImage(""); // Clear the selected image
   };
 
   return (
@@ -52,7 +63,7 @@ function Tables() {
       <MDBox pt={6} pb={3} style={{ height: "auto" }}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <Card>
+            <Card style={{ marginBottom: "30px" }}>
               <MDBox
                 mx={2}
                 mt={-3}
@@ -64,108 +75,110 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Order Details
+                  Service Details
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
                   table={{
                     columns: [
-                      { Header: "Order_Id", accessor: "Order_Id", align: "left" },
-                      { Header: "Payment_Method", accessor: "Payment_Method", align: "center" },
-                      { Header: "Product_Image", accessor: "Product_Image", align: "center" },
-                      { Header: "Total_Amount", accessor: "Total_Amount", align: "center" },
-                      { Header: "Costomer_Name", accessor: "Costomer_Name", align: "center" },
-                      { Header: "action", accessor: "action", align: "center" },
+                      { Header: "Service_Name", accessor: "Service_Name", align: "left" },
+                      { Header: "Service_Amount", accessor: "Service_Amount", align: "center" },
+                      { Header: "Service_Desc", accessor: "Service_Desc", align: "center" },
+                      { Header: "Updated", accessor: "Updated", align: "center" },
                     ],
 
                     rows: userData.map((user) => ({
-                      Order_Id: (
+                      Service_Name: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
                           <MDBox ml={2} lineHeight={1}>
                             <MDTypography display="block" variant="button" fontWeight="medium">
-                              {user.order_id}
+                              {user.service_name}
                             </MDTypography>
                           </MDBox>
                         </MDBox>
                       ),
-                      Payment_Method: (
+                      Service_Amount: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.payment_method}
+                          {user.service_amount}
                         </MDTypography>
                       ),
-                      Product_Image: (
-                        <MDBox display="flex" alignItems="center" lineHeight={1}>
-                          <MDBox ml={2} lineHeight={1}>
-                            {user.product_images ? (
-                              <img
-                                src={`${base_url}/${user.product_images[0]}`}
-                                alt="Product Image"
-                                style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
-                              />
-                            ) : (
-                              <img
-                                src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg" // Replace with your default image path
-                                alt="Default Product Image"
-                                style={{ maxWidth: "100px", maxHeight: "100px" }} // Adjust size as needed
-                              />
-                            )}
-                          </MDBox>
-                        </MDBox>
-                      ),
-                      Total_Amount: (
+                      Service_Desc: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.total_amount}
+                          {user.service_description}
                         </MDTypography>
                       ),
-                      Costomer_Name: (
+                      Updated: (
                         <MDTypography
                           component="a"
                           variant="caption"
                           color="text"
                           fontWeight="medium"
                         >
-                          {user.user_id.full_name}
+                          {new Date(user.updatedAt).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          })}
                         </MDTypography>
-                      ),
-                      action: (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => viewProduct(user.user_id.full_name)}
-                        >
-                          View
-                        </Button>
                       ),
                     })),
                   }}
                   isSorted={false}
                   entriesPerPage={false}
-                  showTotalEntries={true}
+                  showTotalEntries={false}
                   noEndBorder
                 />
-                <MDBox display="flex" justifyContent="center" mt={3} mb={1}>
-                  <Pagination
-                    count={totalPages}
-                    page={page}
-                    onChange={handlePageChange}
-                    color="primary"
-                    shape="rounded"
-                    size="large"
-                  />
-                </MDBox>
               </MDBox>
             </Card>
+            <Card container spacing={6} style={{ marginTop: "20px" }}>
+              <h3 style={{ textAlign: "center", margin: "50px" }}>Service Images</h3>
+              {userData.length > 0 &&
+              userData[0].service_images &&
+              userData[0].service_images.length > 0 ? ( // Check if userData has any items and if the first one has service_images with images
+                <ImageList
+                  sx={{ width: 700, height: 400, margin: "auto" }}
+                  cols={4}
+                  rowHeight={164}
+                >
+                  {userData[0].service_images.map((image, index) => (
+                    <ImageListItem key={index}>
+                      <img
+                        src={`${base_url}/${image}`}
+                        srcSet={`${base_url}/${image}`}
+                        alt={`Service Image ${index + 1}`}
+                        loading="lazy"
+                        onClick={() => handleImageClick(image)} // Handle click to show full image
+                        style={{ cursor: "pointer" }} // Change cursor to pointer
+                      />
+                    </ImageListItem>
+                  ))}
+                </ImageList>
+              ) : (
+                <p>No images available</p> // Fallback content if there are no images
+              )}
+            </Card>
+            {/* Modal for full image view */}
+            <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Full Image</DialogTitle>
+              <DialogContent>
+                <img
+                  src={`${base_url}/${selectedImage}`}
+                  alt="Full View"
+                  style={{ width: "100%", height: "auto" }} // Make image responsive
+                />
+              </DialogContent>
+            </Dialog>
           </Grid>
         </Grid>
       </MDBox>

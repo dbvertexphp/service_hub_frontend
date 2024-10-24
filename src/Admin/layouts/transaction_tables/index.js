@@ -78,7 +78,7 @@ function Tables() {
   const updateTransactionStatus = async (transaction_id, newStatus) => {
     try {
       const response = await Api.updateTransactionStatus(transaction_id, newStatus);
-      fetchData();
+      fetchData(page, searchQuery);
       setUpdateSuccess(true);
       if (response.status) {
         setUpdateSuccess(true);

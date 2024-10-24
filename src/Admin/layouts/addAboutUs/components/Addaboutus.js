@@ -98,8 +98,8 @@ function AddUserForm() {
           {errors.content && <div style={{ color: "red", fontSize: "15px" }}>{errors.content}</div>}
         </div>
 
-        <MDBox p={2} style={{ textAlign: "center", color: "white" }} lineHeight={0}>
-          <Button variant="contained" color="primary" type="submit">
+        <MDBox p={2} style={{ textAlign: "center", color: "#fff" }} lineHeight={0}>
+          <Button variant="contained" color="primary" type="submit" style={{ color: "#fff" }}>
             Add About Us
           </Button>
         </MDBox>

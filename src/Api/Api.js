@@ -923,16 +923,13 @@ export const Api = {
   getProductsByOrderAndSupplier: async (order_id) => {
     try {
       // Perform an API request to create a user here
-      const response = await axios.get(
-        `${base_url}/api/user/getProductsByOrderAndSupplier/${order_id}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-API-KEY": API_KEY,
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${base_url}/api/services/getServiceById/${order_id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-KEY": API_KEY,
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     } catch (error) {
       throw error;

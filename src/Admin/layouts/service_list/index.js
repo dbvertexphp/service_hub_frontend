@@ -119,6 +119,10 @@ function Tables() {
     setServiceDesc(service_description), setServiceAmount(service_amount), setShowModel(true);
   };
 
+  const viewService = (order_id) => {
+    navigate(`/order-product-list/${order_id}`);
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -175,6 +179,7 @@ function Tables() {
                       { Header: "action", accessor: "action", align: "center" },
                       { Header: "delete", accessor: "delete", align: "center" },
                       { Header: "edit", accessor: "edit", align: "center" },
+                      { Header: "detail", accessor: "detail", align: "center" },
                     ],
                     rows: userData.map((user) => ({
                       Service_Name: (
@@ -276,6 +281,15 @@ function Tables() {
                         >
                           Edit
                         </MDTypography>
+                      ),
+                      detail: (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => viewService(user._id)}
+                        >
+                          View
+                        </Button>
                       ),
                       editCategoryComponent: showModel && (
                         <EditService

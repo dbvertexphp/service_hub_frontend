@@ -28,7 +28,7 @@ function Tables() {
   const [showModel, setShowModel] = useState(false);
   const [pagenumberStatusupdate, setPagenumberStatusupdate] = useState("");
   const [total_rows, setTotal_rows] = useState("");
-  const [current_page, setCurrentpage] = useState("");
+  const [current_page, setCurrentpage] = useState(1);
   const [newPage, setNewPage] = useState(1);
   const [total, setTotal] = useState("");
   const base_url = process.env.REACT_APP_BASE_URL;
@@ -65,40 +65,10 @@ function Tables() {
   };
 
   useEffect(() => {
-    async function fetchData(page) {
-      try {
-        const response = await Api.getAllCategoryAdmin(page);
-        if (response && response.data && Array.isArray(response.data)) {
-          const { data, total_pages, current_page, total_count } = response;
-          setUserData(data);
-          setTotal(total_pages);
-          setCurrentpage(current_page);
-          setTotal_rows(total_count);
-        } else {
-          console.error("Invalid API response format:", response);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
     fetchData(newPage);
-  }, [showModel]);
+  }, [newPage, showModel]);
 
   const totalPages = Math.ceil(total_rows / 10);
-  const maxPageNumbers = 10;
-  const currentPage = current_page; // Example: Replace with your current page
-  const startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
-  const endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
-
-  const pageNumbers = Array.from(
-    { length: endPage - startPage + 1 },
-    (_, index) => startPage + index
-  );
-
-  useEffect(() => {
-    fetchData(newPage);
-  }, [newPage]);
 
   const handlePageClick = () => {
     navigate(`/add-category`);
@@ -144,14 +114,12 @@ function Tables() {
                       {
                         Header: "Category Name",
                         accessor: "author",
-
                         align: "center",
                       },
                       { Header: "Category Image", accessor: "image", align: "center" },
-                      { Header: "created", accessor: "created", align: "center" },
-                      { Header: "action", accessor: "action", align: "center" },
+                      { Header: "Created", accessor: "created", align: "center" },
+                      { Header: "Action", accessor: "action", align: "center" },
                     ],
-
                     rows: userData.map((user) => ({
                       author: (
                         <MDBox display="flex" alignItems="center" lineHeight={1}>
@@ -181,7 +149,6 @@ function Tables() {
                           </MDBox>
                         </MDBox>
                       ),
-
                       created: (
                         <MDTypography
                           component="a"
@@ -206,13 +173,6 @@ function Tables() {
                           Edit
                         </MDTypography>
                       ),
-                      editCategoryComponent: showModel && (
-                        <EditCategory
-                          onClose={() => setShowModel(false)}
-                          category_name={category_name}
-                          category_id={category_id}
-                        />
-                      ),
                     })),
                   }}
                   isSorted={false}
@@ -225,6 +185,7 @@ function Tables() {
                     <MDPagination
                       item
                       key="prev"
+                      disabled={current_page === 1} // Disable if on the first page
                       onClick={() => handlePageChange(current_page - 1)}
                     >
                       <span className="admin_paginetions_iocn">
@@ -232,20 +193,21 @@ function Tables() {
                       </span>
                     </MDPagination>
 
-                    {pageNumbers.map((pageNumber) => (
+                    {Array.from({ length: totalPages }, (_, index) => (
                       <MDPagination
                         item
-                        key={pageNumber}
-                        active={pageNumber === current_page}
-                        onClick={() => handlePageChange(pageNumber)}
+                        key={index + 1}
+                        active={index + 1 === current_page}
+                        onClick={() => handlePageChange(index + 1)}
                       >
-                        {pageNumber}
+                        {index + 1}
                       </MDPagination>
                     ))}
 
                     <MDPagination
                       item
                       key="next"
+                      disabled={current_page == totalPages} // Disable if on the last page
                       onClick={() => handlePageChange(current_page + 1)}
                     >
                       <span className="admin_paginetions_iocn">
