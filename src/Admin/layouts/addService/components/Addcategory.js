@@ -11,7 +11,7 @@ function AddUserForm() {
   const [serviceName, setServiceName] = useState("");
   const [serviceDescription, setServiceDescription] = useState("");
   const [serviceAmount, setServiceAmount] = useState("");
-  const [serviceImage, setServiceImage] = useState([]); // Change to hold a single image
+  const [serviceImage, setServiceImage] = useState([]); // Single image
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [successSB, setSuccessSB] = useState(false);
@@ -37,14 +37,29 @@ function AddUserForm() {
     e.preventDefault();
     const newErrors = {};
 
+    // Validate Service Name (max 20 characters)
     if (serviceName.trim() === "") {
-      newErrors.serviceName = "serviceName is required";
+      newErrors.serviceName = "Service Name is required";
+    } else if (serviceName.length > 20) {
+      newErrors.serviceName = "Service Name cannot exceed 20 characters";
     }
+
+    // Validate Service Description (max 50 characters)
     if (serviceDescription.trim() === "") {
-      newErrors.serviceDescription = "serviceDescription is required";
+      newErrors.serviceDescription = "Service Description is required";
+    } else if (serviceDescription.length > 50) {
+      newErrors.serviceDescription = "Service Description cannot exceed 50 characters";
     }
+
+    // Validate Service Amount (must be a number between 1 and 5000)
     if (serviceAmount.trim() === "") {
-      newErrors.serviceAmount = "serviceAmount is required";
+      newErrors.serviceAmount = "Service Amount is required";
+    } else if (!/^\d+$/.test(serviceAmount)) {
+      newErrors.serviceAmount = "Service Amount must be a valid number";
+    } else if (parseInt(serviceAmount) <= 0) {
+      newErrors.serviceAmount = "Service Amount must be greater than 0";
+    } else if (parseInt(serviceAmount) > 5000) {
+      newErrors.serviceAmount = "Service Amount cannot exceed 5000";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -67,7 +82,7 @@ function AddUserForm() {
       const response = await Api.addService(formData, token);
       if (response.errors) {
         setErrors(response.errors);
-      } else if (response.message == "Service created successfully") {
+      } else if (response.message === "Service created successfully") {
         openSuccessSB();
         navigate(`/service-list`);
       } else {
@@ -91,6 +106,8 @@ function AddUserForm() {
             label="Service Name"
             value={serviceName}
             onChange={(e) => setServiceName(e.target.value)}
+            error={!!errors.serviceName}
+            helperText={errors.serviceName}
             fullWidth
             type="text"
           />
@@ -100,6 +117,8 @@ function AddUserForm() {
             label="Service Description"
             value={serviceDescription}
             onChange={(e) => setServiceDescription(e.target.value)}
+            error={!!errors.serviceDescription}
+            helperText={errors.serviceDescription}
             fullWidth
             type="text"
           />
@@ -109,6 +128,8 @@ function AddUserForm() {
             label="Service Amount"
             value={serviceAmount}
             onChange={(e) => setServiceAmount(e.target.value)}
+            error={!!errors.serviceAmount}
+            helperText={errors.serviceAmount}
             fullWidth
             type="text"
           />

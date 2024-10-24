@@ -250,7 +250,7 @@ function Tables() {
                           { Header: "Mobile", accessor: "Mobile", align: "left" },
                           { Header: "Pincode", accessor: "Pincode", align: "left" },
                           { Header: "Created", accessor: "created", align: "center" },
-                          { Header: "Active", accessor: "action", align: "center" },
+                          //   { Header: "Active", accessor: "action", align: "center" },
                         ],
                         rows: userData.map((user) => ({
                           author: (
@@ -314,26 +314,26 @@ function Tables() {
                               {user.datetime}
                             </MDTypography>
                           ),
-                          action: (
-                            <MDTypography
-                              component="a"
-                              variant="caption"
-                              color="text"
-                              fontWeight="medium"
-                            >
-                              <FormGroup>
-                                <FormControlLabel
-                                  control={
-                                    <Switch
-                                      defaultChecked={user.deleted_at == null}
-                                      onChange={() => UserAdminStatusUpdate(user._id)}
-                                      inputProps={{ "aria-label": "controlled" }}
-                                    />
-                                  }
-                                />
-                              </FormGroup>
-                            </MDTypography>
-                          ),
+                          //   action: (
+                          //     <MDTypography
+                          //       component="a"
+                          //       variant="caption"
+                          //       color="text"
+                          //       fontWeight="medium"
+                          //     >
+                          //       <FormGroup>
+                          //         <FormControlLabel
+                          //           control={
+                          //             <Switch
+                          //               defaultChecked={user.deleted_at == null}
+                          //               onChange={() => UserAdminStatusUpdate(user._id)}
+                          //               inputProps={{ "aria-label": "controlled" }}
+                          //             />
+                          //           }
+                          //         />
+                          //       </FormGroup>
+                          //     </MDTypography>
+                          //   ),
                         })),
                       }}
                       isSorted={false}

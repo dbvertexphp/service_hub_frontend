@@ -124,7 +124,7 @@ function Dashboard() {
               </Link>
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={3}>
+          {/*<Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <Link>
                 <ComplexStatisticsCard
@@ -140,7 +140,7 @@ function Dashboard() {
                 />
               </Link>
             </MDBox>
-          </Grid>
+          </Grid>*/}
           {/*<Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
               <Link to="/job-list">

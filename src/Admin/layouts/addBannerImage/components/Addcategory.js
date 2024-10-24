@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddUserForm() {
   const [bannerTitle, setBannerTitle] = useState("");
-  const [bannerImage, setBannerImage] = useState(null); // Change to hold a single image
+  const [bannerImage, setBannerImage] = useState(null); // Holds a single image
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [successSB, setSuccessSB] = useState(false);
@@ -34,12 +34,21 @@ function AddUserForm() {
     e.preventDefault();
     const newErrors = {};
 
+    // Validate bannerTitle (required and max 20 characters)
     if (bannerTitle.trim() === "") {
       newErrors.bannerTitle = "Title is required";
+    } else if (bannerTitle.length > 20) {
+      newErrors.bannerTitle = "Title cannot exceed 20 characters";
     }
 
+    // Validate bannerImage (required, only image formats, and size under 5MB)
     if (!bannerImage) {
-      newErrors.bannerImage = "Image is required"; // Check if image is provided
+      newErrors.bannerImage = "Image is required";
+    } else if (!["image/jpeg", "image/png", "image/gif"].includes(bannerImage.type)) {
+      newErrors.bannerImage = "Only JPEG, PNG, or GIF formats are allowed";
+    } else if (bannerImage.size > 5 * 1024 * 1024) {
+      // Check for 5MB size limit
+      newErrors.bannerImage = "Image size cannot exceed 5 MB";
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -69,8 +78,20 @@ function AddUserForm() {
   };
 
   const handleFileChange = (e) => {
-    // Only set the first selected file
-    setBannerImage(e.target.files[0] || null);
+    const file = e.target.files[0];
+    // Check if it's an image and if the size is under 5 MB
+    if (file && ["image/jpeg", "image/png", "image/gif"].includes(file.type)) {
+      if (file.size <= 5 * 1024 * 1024) {
+        // Check file size
+        setBannerImage(file);
+      } else {
+        setBannerImage(null);
+        setErrors({ bannerImage: "Image size cannot exceed 5 MB" });
+      }
+    } else {
+      setBannerImage(null);
+      setErrors({ bannerImage: "Only JPEG, PNG, or GIF formats are allowed" });
+    }
   };
 
   return (

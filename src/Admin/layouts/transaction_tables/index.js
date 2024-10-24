@@ -230,7 +230,7 @@ function Tables() {
                                 minWidth: 120, // Adjust the width if necessary
                                 backgroundColor:
                                   user.status === "Accepted"
-                                    ? "#FF5733"
+                                    ? "#50C878"
                                     : user.status === "Rejected"
                                     ? "red"
                                     : "inherit", // Default background color
