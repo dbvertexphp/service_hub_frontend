@@ -149,7 +149,7 @@ function Tables() {
                           { Header: "Order_Id", accessor: "Order_Id", align: "left" },
                           { Header: "Name", accessor: "Name", align: "center" },
                           { Header: "Service_Name", accessor: "Service_Name", align: "center" },
-                          { Header: "Service_Image", accessor: "Service_Image", align: "center" },
+                          //   { Header: "Service_Image", accessor: "Service_Image", align: "center" },
                           { Header: "Total_Amount", accessor: "Total_Amount", align: "center" },
                           { Header: "Mobile", accessor: "Mobile", align: "center" },
                           { Header: "Datetime", accessor: "Datetime", align: "center" },
@@ -181,25 +181,25 @@ function Tables() {
                               {user.service_id?.service_name ? user.service_id.service_name : "N/A"}
                             </MDTypography>
                           ),
-                          Service_Image: (
-                            <MDBox display="flex" alignItems="center" lineHeight={1}>
-                              <MDBox ml={2} lineHeight={1}>
-                                {user.service_images && user.service_images.length > 0 ? (
-                                  <img
-                                    src={`${base_url}/${user.service_images[0]}`}
-                                    alt="Service Image"
-                                    style={{ maxWidth: "100px", maxHeight: "100px" }}
-                                  />
-                                ) : (
-                                  <img
-                                    src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
-                                    alt="Default Service Image"
-                                    style={{ maxWidth: "100px", maxHeight: "100px" }}
-                                  />
-                                )}
-                              </MDBox>
-                            </MDBox>
-                          ),
+                          //   Service_Image: (
+                          //     <MDBox display="flex" alignItems="center" lineHeight={1}>
+                          //       <MDBox ml={2} lineHeight={1}>
+                          //         {user.service_images && user.service_images.length > 0 ? (
+                          //           <img
+                          //             src={`${base_url}/${user.service_images[0]}`}
+                          //             alt="Service Image"
+                          //             style={{ maxWidth: "100px", maxHeight: "100px" }}
+                          //           />
+                          //         ) : (
+                          //           <img
+                          //             src="https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg"
+                          //             alt="Default Service Image"
+                          //             style={{ maxWidth: "100px", maxHeight: "100px" }}
+                          //           />
+                          //         )}
+                          //       </MDBox>
+                          //     </MDBox>
+                          //   ),
                           Total_Amount: (
                             <MDTypography
                               component="a"
