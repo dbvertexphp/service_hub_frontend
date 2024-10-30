@@ -17,6 +17,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
 import MDSnackbar from "Admin/components/MDSnackbar";
 import { FaEye } from "react-icons/fa";
 
@@ -29,6 +30,7 @@ import MDAvatar from "Admin/components/MDAvatar";
 import { Api } from "Api/Api";
 import Bankdetails_Model from "../model/bankdetails_model";
 import Pagination from "@mui/material/Pagination";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 // Data
 
@@ -45,6 +47,8 @@ function Tables() {
 
   const openSuccessSB = () => setSuccessSB(true);
   const closeSuccessSB = () => setSuccessSB(false);
+  const [open, setOpen] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   // State variables for pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -125,11 +129,13 @@ function Tables() {
     setDescriptionsModelShow(true);
   };
 
-  const UserAdminStatusUpdate = async (userId) => {
+  const UserDelete = async (userId) => {
     try {
-      const response = await Api.UserAdminStatus(userId);
-      if (response) {
+      const response = await Api.UserDelete(userId);
+      console.log(response);
+      if (response.status == true) {
         setSuccessSB(true);
+        fetchData(currentPage, searchQuery);
       }
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -207,6 +213,20 @@ function Tables() {
     setCurrentPage(value);
   };
 
+  const handleClickOpen = (userId) => {
+    setSelectedUserId(userId);
+    setOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpen(false);
+  };
+
+  const handleDelete = (userId) => {
+    UserDelete(userId);
+    handleCloseDialog();
+  };
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -250,7 +270,7 @@ function Tables() {
                           { Header: "Mobile", accessor: "Mobile", align: "left" },
                           { Header: "Pincode", accessor: "Pincode", align: "left" },
                           { Header: "Created", accessor: "created", align: "center" },
-                          //   { Header: "Active", accessor: "action", align: "center" },
+                          { Header: "Active", accessor: "action", align: "center" },
                         ],
                         rows: userData.map((user) => ({
                           author: (
@@ -314,26 +334,49 @@ function Tables() {
                               {user.datetime}
                             </MDTypography>
                           ),
-                          //   action: (
-                          //     <MDTypography
-                          //       component="a"
-                          //       variant="caption"
-                          //       color="text"
-                          //       fontWeight="medium"
-                          //     >
-                          //       <FormGroup>
-                          //         <FormControlLabel
-                          //           control={
-                          //             <Switch
-                          //               defaultChecked={user.deleted_at == null}
-                          //               onChange={() => UserAdminStatusUpdate(user._id)}
-                          //               inputProps={{ "aria-label": "controlled" }}
-                          //             />
-                          //           }
-                          //         />
-                          //       </FormGroup>
-                          //     </MDTypography>
-                          //   ),
+                          action: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              <FormGroup>
+                                <IconButton
+                                  onClick={() => handleClickOpen(user._id)}
+                                  aria-label="delete"
+                                >
+                                  <DeleteIcon />
+                                </IconButton>
+
+                                <Dialog
+                                  open={open}
+                                  onClose={handleCloseDialog}
+                                  aria-labelledby="delete-dialog-title"
+                                >
+                                  <DialogTitle id="delete-dialog-title">Delete User</DialogTitle>
+                                  <DialogContent>
+                                    <DialogContentText>
+                                      Are you sure you want to delete this user? This action cannot
+                                      be undone.
+                                    </DialogContentText>
+                                  </DialogContent>
+                                  <DialogActions>
+                                    <Button onClick={handleCloseDialog} color="primary">
+                                      Cancel
+                                    </Button>
+                                    <Button
+                                      onClick={() => handleDelete(selectedUserId)}
+                                      color="secondary"
+                                      autoFocus
+                                    >
+                                      Confirm Delete
+                                    </Button>
+                                  </DialogActions>
+                                </Dialog>
+                              </FormGroup>
+                            </MDTypography>
+                          ),
                         })),
                       }}
                       isSorted={false}

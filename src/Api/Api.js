@@ -77,6 +77,7 @@ export const Api = {
       throw error;
     }
   },
+
   UserAdminStatus: async (userId) => {
     try {
       // Perform an API request to create a user here
@@ -98,6 +99,29 @@ export const Api = {
       throw error;
     }
   },
+
+  UserDelete: async (userId) => {
+    try {
+      // Perform an API request to create a user here
+      const response = await axios.post(
+        `${base_url}/api/user/deleteUser`,
+        {
+          user_id: userId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": API_KEY,
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   UpdateMobileAdmin: async (UserId, mobile) => {
     try {
       // Perform an API request to create a user here

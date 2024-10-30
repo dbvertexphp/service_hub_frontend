@@ -151,6 +151,7 @@ function Tables() {
                           { Header: "Service_Name", accessor: "Service_Name", align: "center" },
                           { Header: "Service_Image", accessor: "Service_Image", align: "center" },
                           { Header: "Total_Amount", accessor: "Total_Amount", align: "center" },
+                          { Header: "Mobile", accessor: "Mobile", align: "center" },
                           { Header: "Datetime", accessor: "Datetime", align: "center" },
                           { Header: "Status", accessor: "Status", align: "center" },
                         ],
@@ -167,7 +168,7 @@ function Tables() {
                           ),
                           Name: (
                             <MDTypography display="block" variant="button" fontWeight="medium">
-                              {`${user.user_id.first_name} ${user.user_id.last_name}`}
+                              {`${user.user_id?.first_name || ""} ${user.user_id?.last_name || ""}`}
                             </MDTypography>
                           ),
                           Service_Name: (
@@ -207,6 +208,16 @@ function Tables() {
                               fontWeight="medium"
                             >
                               {user.total_amount}
+                            </MDTypography>
+                          ),
+                          Mobile: (
+                            <MDTypography
+                              component="a"
+                              variant="caption"
+                              color="text"
+                              fontWeight="medium"
+                            >
+                              {user.user_id ? user.user_id.mobile : ""}
                             </MDTypography>
                           ),
                           Datetime: (
